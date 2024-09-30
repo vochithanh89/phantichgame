@@ -1,5 +1,5 @@
 @if(App::environment('production'))
-    <script async data-type="lazy" data-src="https://www.googletagmanager.com/gtag/js?id=G-5TPT4F302S"></script>
+    <script async data-type="lazy" data-src="https://www.googletagmanager.com/gtag/js?id=G-GYB02J3BDN"></script>
     <script>
         function loadGTM() {
             window.dataLayer = window.dataLayer || [];
@@ -7,7 +7,7 @@
                 dataLayer.push(arguments);
             }
             gtag('js', new Date());
-            gtag('config', 'G-5TPT4F302S');
+            gtag('config', 'G-GYB02J3BDN');
         }
     </script>
 @else
