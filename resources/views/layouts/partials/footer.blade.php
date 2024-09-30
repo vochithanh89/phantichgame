@@ -16,11 +16,7 @@
                 </p>
             </div>
             <div>
-                <a target="_blank" href="//www.dmca.com/Protection/Status.aspx?ID=fccf73a5-a701-45bf-b46e-d37870b00d57"
-                    title="DMCA.com Protection Status" class="dmca-badge"> <img
-                        src ="https://images.dmca.com/Badges/dmca_protected_16_120.png?ID=fccf73a5-a701-45bf-b46e-d37870b00d57"
-                        alt="DMCA.com Protection Status" /></a>
-                <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
+                <a target="_blank" href="//www.dmca.com/Protection/Status.aspx?ID=17608ed7-04d1-4d92-bff4-c5eff17c4eb1" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_16_120.png?ID=17608ed7-04d1-4d92-bff4-c5eff17c4eb1"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
             </div>
         </div>
 
