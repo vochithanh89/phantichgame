@@ -3,7 +3,11 @@
         Tìm kiếm
     </label>
     <div class="relative">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <input type="text" id="default-search"
+            class="block w-full p-4 pr-10 bg-gray-100 border-none rounded-md text-sm border focus:border-none focus:ring-0 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+            name="q" placeholder="Nhập bất kỳ từ khoá..." required="">
+
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <i class="fa-regular fa-magnifying-glass text-gray-500 dark:text-gray-400"
                 data-src="/icon/svgs/regular/magnifying-glass.svg"><svg xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
@@ -13,12 +17,5 @@
                     </path>
                 </svg></i>
         </div>
-        <input type="text" id="default-search"
-            class="block w-full p-4 pl-10 pr-24 border-gray-200 rounded-md text-sm border focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-            name="q" placeholder="Nhập bất kỳ từ khoá..." required="">
-        <button type="submit"
-            class="text-white absolute right-2.5 bottom-2.5 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-            Tìm kiếm
-        </button>
     </div>
 </form>

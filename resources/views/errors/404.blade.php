@@ -2,7 +2,7 @@
     use App\Models\BlogPost;
 
     $title = 'Không tìm thấy trang bạn yêu cầu';
-    $description = 'Bài viết thể thao, esport hôm nay mới nhất trong ngày';
+    $description = config('app.description');
 
     $posts = BlogPost::getNewestPosts(24);
 @endphp
@@ -27,20 +27,6 @@
                     class="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">
                     Trở về trang chủ
                 </a>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            <div class="lg:col-span-2">
-                <x-shared.heading-title title="Bài viết mới nhất có thể bạn đang tìm kiếm" :description="$description" />
-                <div class="grid grid-cols-1 gap-5">
-                    @foreach ($posts as $post)
-                        <x-blog.card.default :post="$post" />
-                    @endforeach
-                </div>
-            </div>
-            <div>
-                <x-shared.sidebar />
             </div>
         </div>
     </div>

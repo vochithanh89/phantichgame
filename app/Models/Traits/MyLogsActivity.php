@@ -9,14 +9,14 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 trait MyLogsActivity
 {
-    // use LogsActivity;
+    use LogsActivity;
 
-    // public function getActivitylogOptions(): LogOptions
-    // {
-    //     return LogOptions::defaults()
-    //         ->logAll()
-    //         ->logOnlyDirty();
-    // }
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty();
+    }
 
     public function logs(): HasMany {
         return $this->hasMany(Activity::class, 'subject_id')

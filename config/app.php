@@ -6,8 +6,8 @@ use Illuminate\Support\ServiceProvider;
 return [
     // For SEO
 
-    'title' => 'Phân Tích Game',
-    'description' => 'Chuyên tìm hiểu bí ẩn và phân tích cốt truyện của những thứ kì quặc trong các trò chơi',
+    'title' => 'Phân Tích Game - Phân Tích Mọi Thứ Về Game',
+    'description' => 'Chuyên tìm hiểu bí ẩn và phân tích cốt truyện, tóm tắt cốt truyện của các trò chơi nổi tiếng.',
     'logo' => env('APP_URL') . '/images/logo/logo.png',
     'default_image' => env('APP_URL') . '/images/default/background.png',
 

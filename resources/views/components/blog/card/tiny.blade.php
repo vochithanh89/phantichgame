@@ -1,29 +1,11 @@
-@props(['post'])
-
-<div class="">
-    <div class="p-4 border rounded-xl w-full">
-        <div class="flex items-center justify-start gap-4 font-semibold">
-            <figure class="flex-none">
-                <a href="{{ $post->url }}">
-                    <img 
-                        alt="{{ $post->alias }}" 
-                        loading="lazy"
-                        class="rounded-md w-32 h-20 object-cover"
-                        src="{{ $post->thumbnail_url }}"
-                    />
-                </a>
-            </figure>
-            <div>
-                <h3>
-                    <a 
-                        href="{{ $post->url }}"
-                        class="line-clamp-2 font-semibold text-base text-default leading-5 hover:text-primary transition hover:duration-300 line-clam-2"
-                    >
-                        {{ $post->name }}
-                    </a>
-                </h3>
-                <p class="mt-2.5 text-content text-sm">{{ $post->created_at_string }}</p>
-            </div>
-        </div>
+<a href="{{ $post->url }}" class="flex items-center gap-4 py-4 bg-gray-50 hover:bg-gray-100 border-l-4 rounded-r-2xl border-transparent hover:border-gray-600 transition-all">
+    <div></div>
+    <div class="flex items-center justify-center w-10 h-10 shrink-0 rounded-md bg-white">
+        <span class="font-bold text-lg">
+            {{ $index }}
+        </span>
     </div>
-</div>
+    <h3 class="font-medium text-gray-500 pr-4">
+        {{ $post->name }}
+    </h3>
+</a>

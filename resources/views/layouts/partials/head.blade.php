@@ -36,18 +36,20 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="@yield('title', config('app.title'))" />
 <meta property="og:description" content="@yield('description', config('app.description'))" />
-<meta property="og:image" content="@yield('image', config('app.logo'))" />
+<meta property="og:image" content="@yield('image', config('app.default_image'))" />
+
+<meta name='dmca-site-verification' content='SjJqQlg3dk9uQ3h1YVhHYzFFTm9lQT090' />
 
 {!! 
     Schema::organization()
-        ->image(asset('/images/logo/logo-text.png'))
+        ->image(asset('/images/logo/default_image.png'))
         ->logo(asset('/images/logo/logo.png'))
         ->name(config('app.name'))
         ->description(config('app.description'))
         ->email('ct03dev@gmail.com')
-        ->telephone('0832469830')
+        ->telephone('0832469821')
         ->address([
-            'streetAddress' => 'Nguyen Thai Son',
+            'streetAddress' => 'Cao Thang',
             'addressLocality' => 'Ho Chi Minh',
             'addressCountry' => 'VI',
             'addressRegion' => 'Viet Nam',
@@ -58,7 +60,7 @@
 
 {!!
     Schema::webSite()
-        ->name(!empty(app()->view->getSections()['title']) ? app()->view->getSections()['title'] : config('app.title'))
+        ->name(config('app.name'))
         ->alternateName(!empty(app()->view->getSections()['description']) ? app()->view->getSections()['description'] : config('app.description'))
         ->url(url()->full())
         ->potentialAction(
@@ -70,3 +72,5 @@
 !!}
 
 @yield('schema')
+
+<x-feed-links />

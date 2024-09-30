@@ -2,8 +2,8 @@
     use Rawilk\Breadcrumbs\Facades\Breadcrumbs;
     use Rawilk\Breadcrumbs\Support\Generator;
 
-    $title = 'Tìm kiếm thấy ' . count($posts) . ' bài phân tích game cho từ khoá: ' . $keyword;
-    $description = 'Kết quả bài phân tích game cho từ khoá: ' . $keyword;
+    $title = 'Tìm kiếm thấy ' . count($posts) . ' kết quả cho từ khoá: ' . $keyword;
+    $description = 'Kết quả bài viết cho từ khoá: ' . $keyword;
 
     // Home
     Breadcrumbs::for('home', fn (Generator $trail) => $trail->push('Trang chủ', '/'));
@@ -25,19 +25,15 @@
         {!! Breadcrumbs::view('breadcrumbs::json-ld', 'search') !!}
     @endsection
 
+    <div class="mb-8">
+        <x-shared.hero-heading :title="$title" :description="$description" />
+    </div>
+
     <div class="container">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2">
-                <div class="mb-4">
-                    {!! Breadcrumbs::render('search') !!}
-                </div>
-                <x-shared.heading-title :title="$title" :description="$description" />
-
-                <div class="grid grid-cols-1 gap-5">
-                    @foreach ($posts as $post)
-                        <x-blog.card.default :post="$post" />
-                    @endforeach
-                </div>
+                <x-shared.title :title="$title" />
+                <x-blog.section.default :posts="$posts" />
                 <div class="mt-8">
                     {{ $posts->links('components.shared.pagination') }}
                 </div>

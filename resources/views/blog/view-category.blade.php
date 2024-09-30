@@ -22,25 +22,20 @@
 <x-app-layout>
     @section('title', $title)
     @section('description', $description)
-    @section('description', $image)
+    @section('image', $image)
     @section('schema')
         {!! Breadcrumbs::view('breadcrumbs::json-ld', 'category') !!}
     @endsection
 
+    <div class="mb-8">
+        <x-shared.hero-heading :title="$category->name" :description="$category->description" :image="$category->thumbnail_url" />
+    </div>
+
     <div class="container">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2">
-                <div class="mb-4">
-                    {!! Breadcrumbs::render('category') !!}
-                </div>
-
-                <x-shared.heading-title :title="$category->name" :description="$category->description" />
-
-                <div class="grid grid-cols-1 gap-5">
-                    @foreach ($posts as $post)
-                        <x-blog.card.default :post="$post" />
-                    @endforeach
-                </div>
+                <x-shared.title :title="$category->name" />
+                <x-blog.section.default :posts="$posts" />
                 <div class="mt-8">
                     {{ $posts->links('components.shared.pagination') }}
                 </div>

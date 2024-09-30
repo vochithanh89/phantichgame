@@ -5,3 +5,6 @@
         {{ $status }}
     </div>
 @endif
+<div class="hidden space-x-4">
+
+</div>

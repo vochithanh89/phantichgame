@@ -1,87 +1,81 @@
-<nav class="bg-white">
-    <div class="container">
-        <div class="block lg:flex items-center justify-between py-2">
-            <div x-data="{ isOpen: false }" class="flex justify-between items-center lg:items-start lg:flex-col">
-                <a href="/" alt="{{ config('app.name') }}">
-                    <x-shared.logo-text class="h-12 lg:h-16" />
-                </a>
-                <span class="flex-1 text-end text-primary text-white">
-                    {{-- {{ (new \Jenssegers\Date\Date('now', 'Asia/Bangkok'))->format('D, H:i d/m/Y'); }} --}}
-                </span>
-                <button x-on:click="isOpen=!isOpen" class="text-primary ml-3 lg:hidden" title="nav-button" type="button">
-                    <span x-cloak x-show="!isOpen">
-                        <x-heroicon-s-bars-3 class="w-8" />
-                    </span>
-                    <span x-cloak x-show="isOpen">  
-                        <x-heroicon-o-x-mark class="w-8" />
-                    </span> 
-                </button>
-                <div x-cloak x-show="isOpen">
-                    @include('/layouts/partials/category-navbar-mobile', [
-                        'categories' => $categories
-                    ])
-                </div>
-            </div>
-            <div class="items-center gap-4 hidden lg:flex">
-                <div>
-                    
-                </div>
-                @if (Auth::check())
-                    <div class="relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                @if (true)
-                                    <button class="flex text-sm rounded-full transition">
-                                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                    </button>
-                                @else
-                                    <span class="inline-flex rounded-md">
-                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                            {{ Auth::user()->name }}
+@php
+    use App\Models\BlogCategory;
 
-                                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        </button>
-                                    </span>
-                                @endif
-                            </x-slot>
+    $categories = BlogCategory::where(['is_published' => 1])
+        ->where(['parent_id' => null])
+        ->take(20)
+        ->get();
 
-                            <x-slot name="content">
-                                <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Hello, {{ Auth::user()->name }}
-                                </div>
+@endphp
 
-                                @if (Auth::user()->can('access-panel'))
-                                    <x-dropdown-link href="/admin">
-                                        {{ __('Admin') }}
-                                    </x-dropdown-link>
-                                @endif
+<nav class="py-4 bg-white shadow-card">
+    <div 
+        x-data="{
+            isSearch: false,
+            isOpenNav: false,
+        }" 
+        class="container"
+    >
+        <template x-if="!isSearch">
+            <div class="flex items-center justify-between">
+                <div class="flex justify-between items-center">
+                    <a href="/" alt="{{ config('app.name') }}" class="mr-8">
+                        <x-shared.logo-text class="h-8" />
+                    </a>
 
-                                <div class="border-t border-gray-200"></div>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}" x-data>
-                                    @csrf
-
-                                    <x-dropdown-link href="{{ route('logout') }}"
-                                            @click.prevent="$root.submit();">
-                                        {{ __('Log Out') }}
-                                    </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown>
+                    <div class="gap-4 hidden lg:flex">
+                        @foreach ($categories as $category)
+                            <a href="{{ $category->url }}" class="text-sm font-medium text-default hover:text-primary transition-all">
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
                     </div>
-                @else
-                    {{-- <div class="">
-                        <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-semibold bg-primary-500 text-white rounded-sm uppercase">
-                            Đăng nhập
-                        </a>
-                    </div> --}}
-                @endif
-                
+    
+                    <div x-show="isOpenNav" x-transition.opacity class="fixed inset-0 gap-4 z-50">
+                        <div @click="isOpenNav=false" class="absolute inset-0 w-full h-full bg-black/40"></div>
+                        <div class="relative px-4 py-6 w-2/3 h-full bg-white z-10">
+                            <div class="mb-12 flex gap-4">
+                                <button type="button" class="lg:hidden text-gray-500 transition-all" >
+                                    <x-heroicon-s-x-mark @click="isOpenNav=false" class="size-6" />
+                                </button>
+                                <a href="/" alt="{{ config('app.name') }}">
+                                    <x-shared.logo-text class="h-8" />
+                                </a>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                @foreach ($categories as $category)
+                                    <a href="{{ $category->url }}" class="text-lg font-medium text-gray-500 hover:text-primary transition-all">
+                                        {{ $category->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button @click="isSearch = true" type="button" class="text-gray-500 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">
+                        <x-heroicon-s-magnifying-glass class="size-6" />
+                    </button>
+                    
+                    <button type="button" class="lg:hidden text-gray-500 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all" >
+                        <x-heroicon-o-bars-3 @click="isOpenNav=true" class="size-6" />
+                    </button>
+
+                    <div>
+                        <x-shared.user-dropdown />
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
+        <template x-if="isSearch">
+            <div class="flex items-center gap-4 h-8">
+                <button type="button" @click="isSearch = false" class="text-gray-500 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">
+                    <x-heroicon-o-arrow-small-left class="size-6" />
+                </button>
+                <div class="flex-1">
+                    <x-shared.search-form />
+                </div>
+            </div>
+        </template>
     </div>
 </nav>

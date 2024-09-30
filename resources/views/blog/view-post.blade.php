@@ -44,109 +44,63 @@
         !!}
     @endsection
 
-    <div class="container">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2">
-                <div class="mb-4">
-                    {!! Breadcrumbs::render('post') !!}
-                </div>
-                {{-- category --}}
-                <div class="w-fit text-white px-2.5 py-1 bg-primary-600 text-xs md:text-sm rounded-md mb-2 md:mb-4">
-                    <a href="{{ $post->category->url }}">
-                        {{ $post->category->name }}
-                    </a>
-                </div>
+    <div class="relative -mt-5 h-80 w-full bg-cover bg-fixed bg-center" style="background-image: url('{{ $post->thumbnail_url }}')">
+        <div class="absolute inset-0 w-full h-full bg-black/40"></div>
+    </div>
 
-                {{-- title --}}
-                <h1 class="mb-6 text-base-content font-semibold text-3xl leading-10 ">
-                    {{ $title }}
-                </h1>
+    <div class="relative mx-auto max-w-4xl p-4 bg-white">
+        <div class="mt-8 mb-4">
+            <a href="{{ $post->category->url }}" class="text-gray-500 hover:underline" >
+                {{ $post->category->name }}
+            </a>
+        </div>
+        
+        {{-- title --}}
+        <h1 class="mb-6 text-base-content font-semibold text-4xl leading-10">
+            {{ $post->name }}
+        </h1>
+        {{-- description --}}
+        <p class="mb-4 text-lg font-semibold italic text-default">
+            {{ $post->description }}
+        </p>
 
-                {{-- author --}}
-                <div class="mb-6 flex gap-2 items-center">
-                    <img class="h-8 w-8 rounded-full" src="{{ $post->author->profile_photo_url }}" alt="">
-                    <div>
-                        {{-- <span class="text-sm text-gray-400">by</span> --}}
-                        <span class="text-sm font-medium text-default">
-                            {{ $post->author->name }}
-                        </span>
-                    </div>
-                    <span class="w-1 h-1 rounded-full bg-gray-400"></span>
-                    <span class="text-sm text-gray-400">
-                        {{ $post->created_at_string }}
-                    </span>
-                </div>
-                {{-- desc --}}
-                <p class="mb-8 text-lg font-semibold text-default">
-                    {{ $post->description }}
+        <div class="mb-8 flex items-center gap-2">
+            <div class="flex items-center gap-2">
+                <img src="{{ $post->author->profile_photo_url }}" loading="lazy" alt="{{ $post->slug }}" class="w-10 h-10 rounded-full">
+                <p class="text-sm font-semibold">
+                    {{ $post->author->name }}   
                 </p>
-                {{-- thumbnail --}}
-                <div class="mb-6">
-                    <img class="w-full" src="{{ $post->thumbnail_url }}" alt="{{ $post->alias }}">
-                </div>
-                {{-- content --}}
-                <x-shared.article-content :content="$post->content" />
-
-                {{-- tags --}}
-                <div class="mt-8 flex flex-wrap gap-4 justify-between">
-                    <div>
-                        <p class="inline-block mr-4 font-semibold text-default">Tags:</p>
-                        <div class="inline-flex flex-wrap items-center gap-2">
-                            @foreach ($post->tags as $tag)
-                                <a href="{{ $tag->url }}" class="rounded-md text-sm text-primary-600 font-medium">
-                                    #{{ $tag->name }}
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <p class="mr-4 font-semibold text-default">Chia sẻ: </p>
-                        <div class="inline-flex items-center gap-2">
-                            <div x-data="{
-                                shareUrl: '{{ 'https://www.facebook.com/sharer/sharer.php?u=' . url()->current() }}',
-                                handleShare: () => {
-                                    window.open($data.shareUrl, 'Facebook', 'height=600,width=600,top=50%,left=50%');
-                                }
-                            }">
-                                <a href="javascript:;" @click="handleShare">
-                                    <x-carbon-logo-facebook class="w-8 rounded-full text-sky-600" />
-                                </a>
-                            </div>
-
-                            <div x-data="{
-                                shareUrl: '{{ 'https://twitter.com/intent/post?text=' . $post->name . '&url=' . urlencode(url()->current()) }}',
-                                handleShare: () => {
-                                    window.open($data.shareUrl, 'Facebook', 'height=600,width=600,top=50%,left=50%');
-                                }
-                            }">
-                                <a href="javascript:;" @click="handleShare">
-                                    <x-carbon-logo-twitter class="w-8 rounded-full text-sky-600" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                {{-- related post --}}
-                <div class="mb-6">
-                    <x-shared.title title="Bài viết liên quan" />
-                </div>
-                <div class="grid grid-cols-1 gap-5">
-                    @foreach ($post->related_posts as $post)
-                        <x-blog.card.default :post="$post" />
-                    @endforeach
-                </div>
-                <div class="flex justify-center mt-8">
-                    <a
-                        class="border hover:badge text-content px-4 py-2 rounded-sm font-medium text-sm transition-all"
-                        href="{{ route('blog.index') }}"
-                        >Xem tất cả</a
-                    >
-                </div>
             </div>
-            <div>
-                <x-shared.sidebar />
+            <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
+            <span class="text-gray-500 text-sm tracking-wider font-medium">
+                {{ $post->created_at_string }}
+            </span>
+        </div>
+
+        <x-shared.article-content :post="$post" />
+
+        {{-- tags --}}
+        <div class="mt-6 mb-8 flex flex-wrap lg:flex-nowrap gap-4 items-start justify-between">
+            <div class="inline-flex flex-wrap gap-2">
+                @foreach ($post->tags as $tag)
+                    <a href="{{ $tag->url }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm text-gray-500 font-medium transition-all">
+                        #{{ $tag->name }}
+                    </a>
+                @endforeach
             </div>
+            <x-shared.social-bar :post="$post" />
+        </div>
+
+    </div>
+
+    <div class="container space-y-12">
+        <div>
+            <x-shared.title title="Bài viết liên quan" />
+            <x-blog.section.priority :posts="$post->related_posts" />
+        </div>
+        <div>
+            <x-shared.title title="Có thể bạn sẽ thích" />
+            <x-blog.section.priority :posts="$post->recommend_posts" />
         </div>
     </div>
 

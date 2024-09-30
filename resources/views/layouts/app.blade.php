@@ -1,10 +1,3 @@
-@php
-    use App\Models\BlogCategory; 
-    use App\Models\Tag; 
-    $categories = BlogCategory::where(['parent_id' => null])->limit(20)->get();
-@endphp
-
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="text-[14px] lg:text-[16px]">
     <head>
@@ -22,33 +15,21 @@
 
         <div class="min-h-screen flex flex-col justify-between">
             <!-- Page Heading -->
-            <header class="sticky top-0 lg:static z-50">
-                @if (!empty($header))
-                    {{ $header }}
-                @else   
-                    @include('/layouts/partials/navbar', [
-                        'categories' => $categories
-                    ])
-                @endif
+            <header class="sticky top-0 z-50">
+                @include('/layouts/partials/navbar')
             </header>
 
             <!-- Page Content -->
             <main>
-                @include('/layouts/partials/category-navbar', [
-                    'categories' => $categories
-                ])
                 <div class="py-5">
                     {{ $slot }}
                 </div>
             </main>
 
-            @if (!empty($footer))
-                {{ $footer }}
-            @else   
-                @include('/layouts/partials/footer', [
-                    'categories' => $categories
-                ])
-            @endif
+            <footer>
+                @include('/layouts/partials/footer')
+            </footer>
+            @include('/layouts/partials/plugin-chat')
         </div>
 
     </body>
